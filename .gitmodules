@@ -34,3 +34,6 @@
 [submodule ".vim/bundle/vim-addon-mw-utils"]
 	path = .vim/bundle/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule ".vim/bundle/jslint"]
+	path = .vim/bundle/jslint
+	url = https://github.com/bloveridge/jslint.vim.git
