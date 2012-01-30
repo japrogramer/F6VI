@@ -107,6 +107,7 @@
     set winminheight=0              " windows can be 0 line high 
     set ignorecase                  " case insensitive search
     set smartcase                   " case sensitive when uc present
+    set smartindent                 " context sensitive indenting
     set wildmenu                    " show list instead of just completing
     set wildmode=list:longest,full  " command <Tab> completion, list matches, then longest common part, then all.
     set whichwrap=b,s,h,l,<,>,[,]   " backspace and cursor keys wrap to
@@ -124,9 +125,9 @@
     set nowrap                      " wrap long lines
     set autoindent                  " indent at the same level of the previous line
     set shiftwidth=4                " use indents of 4 spaces
-    set expandtab                   " tabs are spaces, not tabs
     set tabstop=4                   " an indentation every four columns
     set softtabstop=4               " let backspace delete indent
+    set expandtab                   " tabs are spaces, not tabs
     "set matchpairs+=<:>                " match, to be used with % 
     set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
     "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
@@ -208,6 +209,28 @@
 
 " Plugins {
 
+    " Command-t {
+        "let g:CommandTSearchPath = $HOME . '/Code'
+    " }
+    " NerdTree {
+        map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+        map <leader>e :NERDTreeFind<CR>
+        nmap <leader>nt :NERDTreeFind<CR>
+
+        let NERDTreeShowBookmarks=1
+        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+        let NERDTreeChDirMode=0
+        let NERDTreeQuitOnOpen=1
+        let NERDTreeShowHidden=1
+        let NERDTreeKeepTreeInNewTab=1
+    " }
+    " SnipMate {
+        " Setting the author var
+        " If forking, please overwrite in your .vimrc.local file
+        let g:snips_author = 'Steve Francia <steve.francia@gmail.com>'
+        " Shortcut for reloading snippets, useful when developing
+        nnoremap ,smr <esc>:exec ReloadAllSnippets()<cr>
+    " }
     " sparkup {
         "function! SparkKey()
             "ru ftplugin/html/sparkup.vim
@@ -223,25 +246,6 @@
             "endif
         "endfunction
         "au FileType html call SparkKey()
-    " }
-    " SnipMate {
-        " Setting the author var
-        " If forking, please overwrite in your .vimrc.local file
-        let g:snips_author = 'Steve Francia <steve.francia@gmail.com>'
-        " Shortcut for reloading snippets, useful when developing
-        nnoremap ,smr <esc>:exec ReloadAllSnippets()<cr>
-    " }
-    " NerdTree {
-        map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
-        map <leader>e :NERDTreeFind<CR>
-        nmap <leader>nt :NERDTreeFind<CR>
-
-        let NERDTreeShowBookmarks=1
-        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-        let NERDTreeChDirMode=0
-        let NERDTreeQuitOnOpen=1
-        let NERDTreeShowHidden=1
-        let NERDTreeKeepTreeInNewTab=1
     " }
 
 " }
