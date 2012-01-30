@@ -208,6 +208,22 @@
 
 " Plugins {
 
+    " sparkup {
+        "function! SparkKey()
+            "ru ftplugin/html/sparkup.vim
+            let g:sparkup = 'sparkup'
+            "if !exists('g:sparkupArgs')
+                let g:sparkupArgs  = '--no-last-newline'
+            "endif
+            if !exists('g:sparkupExecuteMapping')
+                let g:sparkupExecuteMapping = '<c-s>'
+            endif
+            "if !exists('g:sparkupNextMapping')
+                let g:sparkupNextMapping = '<c-t>'
+            "endif
+        "endfunction
+        "au FileType html call SparkKey()
+    " }
     " SnipMate {
         " Setting the author var
         " If forking, please overwrite in your .vimrc.local file
