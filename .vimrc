@@ -208,32 +208,6 @@
 
 " Plugins {
 
-    
-
-    " Misc { 
-        :map <C-F10> <Esc>:vsp<CR>:VTree<CR>
-        " map Control + F10 to Vtree
-
-        noremap <leader><F5> :CheckSyntax<cr>
-        let g:checksyntax_auto = 1
-
-        "comment out line(s) in visual mode -RB: If you do this, you can't
-        "switch sides of the comment block in visual mode.
-        "vmap  o  :call NERDComment(1, 'toggle')<CR>
-        let g:NERDShutUp=1
-
-        let b:match_ignorecase = 1
-    " }
-    
-    " Command-t {
-        let g:CommandTSearchPath = $HOME . '/Code'
-    " }
-
-    " AutoCloseTag {
-        " Make it so AutoCloseTag works for xml and xhtml files as well
-        au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-    " }
-
     " NerdTree {
         map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
         map <leader>e :NERDTreeFind<CR>
@@ -254,6 +228,11 @@
     " GVIM- (here instead of .gvimrc)
     if has('gui_running')
         set guioptions-=T           " remove the toolbar
+        set guioptions-=m
+        set guioptions-=b
+        set guioptions-=l
+        set guioptions-=L
+        set guioptions-=r
         set lines=40                " 40 lines of text instead of 24,
     else
         set term=builtin_ansi       " Make arrow and other keys work
