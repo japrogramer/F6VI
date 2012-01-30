@@ -7,3 +7,12 @@
 [submodule ".vim/bundle/ack"]
 	path = .vim/bundle/ack
 	url = git://github.com/mileszs/ack.vim.git
+[submodule ".vim/bundle/sparkup"]
+	path = .vim/bundle/sparkup
+	url = https://github.com/rstacruz/sparkup.git
+[submodule ".vim/bundle/surround"]
+	path = .vim/bundle/surround
+	url = git://github.com/spf13/vim-surround.git
+[submodule ".vim/bundle/nercommenter"]
+	path = .vim/bundle/nercommenter
+	url = git://github.com/scrooloose/nerdcommenter.git
