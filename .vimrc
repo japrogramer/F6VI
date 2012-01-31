@@ -209,8 +209,17 @@
 
 " Plugins {
 
+" EasyMotion {
+    "let g:EasyMotion_keys = '1234567890'
+    "let g:EasyMotion_do_shade = 0
+    "let g:EasyMotion_leader_key = '<Leader>'
+    "let g:EasyMotion_mapping_f = '_f'
+    "let g:EasyMotion_mapping_T = '<C-T>'
+"}
     " Command-t {
         "let g:CommandTSearchPath = $HOME . '/Code'
+        "nnoremap <silent> <Leader>t :CommandT<CR>
+        "nnoremap <silent> <Leader>b :CommandTBuffer<CR>
     " }
     " NerdTree {
         map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>

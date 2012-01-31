@@ -19,9 +19,6 @@
 [submodule ".vim/bundle/snipmate"]
 	path = .vim/bundle/snipmate
 	url = git://github.com/spf13/snipmate.vim.git
-[submodule ".vim/bundle/snippets"]
-	path = .vim/bundle/snippets
-	url = git://github.com/spf13/snipmate-snippets.git
 [submodule ".vim/bundle/easymotion"]
 	path = .vim/bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
@@ -40,3 +37,6 @@
 [submodule ".vim/bundle/command-t"]
 	path = .vim/bundle/command-t
 	url = git://git.wincent.com/command-t.git
+[submodule ".vim/bundle/snipmate-snippets"]
+	path = .vim/bundle/snipmate-snippets
+	url = https://github.com/spf13/snipmate-snippets.git
