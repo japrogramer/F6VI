@@ -208,7 +208,6 @@
 " }
 
 " Plugins {
-
 " EasyMotion {
     "let g:EasyMotion_keys = '1234567890'
     "let g:EasyMotion_do_shade = 0
@@ -255,6 +254,13 @@
             "endif
         "endfunction
         "au FileType html call SparkKey()
+    " }
+    " Supertab {
+        "let g:SuperTabDefaultCompletionType = "context"
+        "let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+        let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+        let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+        let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
     " }
 
 " }
