@@ -69,7 +69,7 @@
 " }
 
 " Vim UI {
-    color hhazure                   " load a colorscheme
+    color telstar                   " load a colorscheme
     set tabpagemax=15               " only show 15 tabs
     set showmode                    " display the current mode
 
@@ -256,6 +256,13 @@
         "au FileType html call SparkKey()
     " }
     " Supertab {
+        autocmd FileType python set omnifunc=pythoncomplete#Complete
+        autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+        autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+        autocmd FileType c set omnifunc=ccomplete#Complete
         "let g:SuperTabDefaultCompletionType = "context"
         "let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
         let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
