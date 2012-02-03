@@ -270,6 +270,31 @@
         let NERDTreeShowHidden=1
         let NERDTreeKeepTreeInNewTab=1
     " }
+    " Neocomplete {
+        autocmd FileType python set omnifunc=pythoncomplete#Complete
+        autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+        autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+        autocmd FileType c set omnifunc=ccomplete#Complete
+        let g:neocomplcache_enable_at_startup = 1
+        " Recommended key-mappings.
+        inoremap <expr><CR>  neocomplcache#close_popup()."\<CR>"
+        " <TAB>: completion.
+        inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+        " <C-h>, <BS>: close popup and delete backword char.
+        inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+        inoremap <expr><C-y>  neocomplcache#close_popup()
+        inoremap <expr><C-e>  neocomplcache#cancel_popup()
+        if !exists('g:neocomplcache_omni_patterns')
+            let g:neocomplcache_omni_patterns = {}
+        endif
+    " }
+    "  neco-ghc {
+        "let $PATH=$PATH."/home/japrogramer/.cabal/bin"
+    "}
     " SnipMate {
         " Setting the author var
         " If forking, please overwrite in your .vimrc.local file
@@ -292,20 +317,6 @@
             "endif
         "endfunction
         "au FileType html call SparkKey()
-    " }
-    " Supertab {
-        autocmd FileType python set omnifunc=pythoncomplete#Complete
-        autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-        autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-        autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-        autocmd FileType c set omnifunc=ccomplete#Complete
-        "let g:SuperTabDefaultCompletionType = "context"
-        "let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-        let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-        let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-        let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
     " }
 
 " }
