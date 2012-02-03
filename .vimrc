@@ -209,6 +209,11 @@
 
 " Plugins {
 
+    " Command-t {
+        "let g:CommandTSearchPath = $HOME . '/Code'
+        "nnoremap <silent> <Leader>t :CommandT<CR>
+        "nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+    " }
     " Delimitmate {
         au FileType * let b:delimitMate_autoclose = 1
 
@@ -222,10 +227,36 @@
     "let g:EasyMotion_mapping_f = '_f'
     "let g:EasyMotion_mapping_T = '<C-T>'
 "}
-    " Command-t {
-        "let g:CommandTSearchPath = $HOME . '/Code'
-        "nnoremap <silent> <Leader>t :CommandT<CR>
-        "nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+    " headlights {
+        let g:headlights_use_plugin_menu = 0
+        "Default value: 0
+        "Create menus for bundle script files: >
+        let g:headlights_show_files = 0
+        "Default value: 0
+        "Create menus for bundle commands: >
+        let g:headlights_show_commands = 1
+        "Default value: 1
+        "Create menus for bundle mappings: >
+        let g:headlights_show_mappings = 1
+        "Default value: 1
+        "Create menus for bundle abbreviations: >
+        let g:headlights_show_abbreviations = 0
+        "Default value: 0
+        "Create menus for global bundle functions: >
+        let g:headlights_show_functions = 0
+        "Default value: 0
+        "Create menus for bundle highlights: >
+        let g:headlights_show_highlights = 0
+        "Default value: 0
+        "Create menus for load order of plugin files: >
+        let g:headlights_show_load_order = 0
+        "Default value: 0
+        "Group bundles that share the same root together: >
+        let g:headlights_smart_menus = 1
+        "Default value: 1
+        "Enable debug mode and create menus to access the log file: >
+        let g:headlights_debug_mode = 0
+        "Default value: 0 (1 in the event of a Headlights exception)
     " }
     " NerdTree {
         map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
