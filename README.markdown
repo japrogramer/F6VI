@@ -4,4 +4,7 @@
 
 comman-t needs compiling and
 jslint need external libraries 
+see wiki
  @still in under development@
+
+Quick-pro will help you become a pro 
