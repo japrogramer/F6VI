@@ -1,6 +1,6 @@
 " Modeline and Notes {
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
-"
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker :
+" 
 "   This is the personal .vimrc file of Japrogramer
 "
 " }
@@ -21,7 +21,7 @@
     " 
     " Setup Bundle Support {
     " The next two lines ensure that the ~/.vim/bundle/ system works
-        runtime! autoload/pathogen.vim
+        runtime! bundle/vim-pathogen/autoload/pathogen.vim
         silent! call pathogen#helptags()
         silent! call pathogen#runtime_append_all_bundles()
     " }

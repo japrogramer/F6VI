@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/neco-ghc"]
 	path = .vim/bundle/neco-ghc
 	url = https://github.com/ujihisa/neco-ghc.git
+[submodule ".vim/bundle/vim-pathogen"]
+	path = .vim/bundle/vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
