@@ -327,7 +327,7 @@
     " GVIM- (here instead of .gvimrc)
     if has('gui_running')
         set guioptions-=T           " remove the toolbar
-        set guioptions+=m
+        set guioptions-=m
         set guioptions-=b
         set guioptions-=l
         set guioptions-=L
