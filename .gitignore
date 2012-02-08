@@ -2,4 +2,6 @@
 *.pyc
 *._*
 *.vim/sessions/
-
+*.vim/.netrwhist
+*.vim/spell
+*.vim/bundle/matchit/doc/tags
