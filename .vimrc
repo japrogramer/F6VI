@@ -209,6 +209,8 @@
 
 " Plugins {
 
+        " for cabal bin "irectory"
+        let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
     " Command-t {
         "let g:CommandTSearchPath = $HOME . '/Code'
         "nnoremap <silent> <Leader>t :CommandT<CR>
@@ -296,6 +298,10 @@
     " }
     "  neco-ghc {
         "let $PATH=$PATH."/home/japrogramer/.cabal/bin"
+        "p..................................sld;..
+    "}
+    "  tagbar {
+       nnoremap <silent> <F12> :TagbarToggle<CR>
     "}
     " SnipMate {
         " Setting the author var
