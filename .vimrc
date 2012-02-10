@@ -211,7 +211,7 @@
 
 " Plugins {
 
-        " for cabal bin "irectory"
+        " for cabal bin "Directory"
         let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
     " Command-t {
         "let g:CommandTSearchPath = $HOME . '/Code'
