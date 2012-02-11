@@ -7,9 +7,6 @@
 [submodule ".vim/bundle/sparkup"]
 	path = .vim/bundle/sparkup
 	url = https://github.com/rstacruz/sparkup.git
-[submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
-	url = git://github.com/scrooloose/nerdcommenter.git
 [submodule "snipmate.vim"]
 	path = snipmate.vim
 	url = git://github.com/spf13/snipmate.vim.git
@@ -64,3 +61,6 @@
 [submodule ".vim/bundle/surround"]
 	path = .vim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/bundle/nerdcommenter"]
+	path = .vim/bundle/nerdcommenter
+	url = git://github.com/scrooloose/nerdcommenter.git
