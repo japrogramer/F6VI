@@ -213,24 +213,23 @@
 
         " for cabal bin "Directory"
         let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
-    " Command-t {
-        "let g:CommandTSearchPath = $HOME . '/Code'
-        "nnoremap <silent> <Leader>t :CommandT<CR>
-        "nnoremap <silent> <Leader>b :CommandTBuffer<CR>
-    " }
+    "ctrlp {{{ 
+        let g:ctrlp_map = '<Leader>t'
+        let g:ctrlp_working_path_mode = 0
+    "}}}
     " Delimitmate {
         au FileType * let b:delimitMate_autoclose = 1
 
         " If using html auto complete (complete closing tag)
         au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
     " }
-" EasyMotion {
-    "let g:EasyMotion_keys = '1234567890'
-    "let g:EasyMotion_do_shade = 0
-    "let g:EasyMotion_leader_key = '<Leader>'
-    "let g:EasyMotion_mapping_f = '_f'
-    "let g:EasyMotion_mapping_T = '<C-T>'
-"}
+    " EasyMotion {
+        "let g:EasyMotion_keys = '1234567890'
+        "let g:EasyMotion_do_shade = 0
+        "let g:EasyMotion_leader_key = '<Leader>'
+        "let g:EasyMotion_mapping_f = '_f'
+        "let g:EasyMotion_mapping_T = '<C-T>'
+    "}
     " headlights {
         let g:headlights_use_plugin_menu = 0
         "Default value: 0
