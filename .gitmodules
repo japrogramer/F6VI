@@ -7,11 +7,8 @@
 [submodule ".vim/bundle/sparkup"]
 	path = .vim/bundle/sparkup
 	url = https://github.com/rstacruz/sparkup.git
-[submodule ".vim/bundle/surround"]
-	path = .vim/bundle/surround
-	url = git://github.com/spf13/vim-surround.git
-[submodule ".vim/bundle/nercommenter"]
-	path = .vim/bundle/nercommenter
+[submodule ".vim/bundle/nerdcommenter"]
+	path = .vim/bundle/nerdcommenter
 	url = git://github.com/scrooloose/nerdcommenter.git
 [submodule "snipmate.vim"]
 	path = snipmate.vim
@@ -64,3 +61,6 @@
 [submodule ".vim/bundle/lushtags"]
 	path = .vim/bundle/lushtags
 	url = https://github.com/bitc/lushtags.git
+[submodule ".vim/bundle/surround"]
+	path = .vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
