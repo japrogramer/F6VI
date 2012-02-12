@@ -41,6 +41,7 @@
     " If you use command-t plugin, it conflicts with this, comment it out.
      "autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
     scriptencoding utf-8
+    set encoding=utf-8
 
     " set autowrite                  " automatically write a file when leaving a modified buffer
     set shortmess+=filmnrxoOtT      " abbrev. of messages (avoids 'hit enter')
@@ -69,6 +70,7 @@
 " }
 
 " Vim UI {
+    set shortmess+=I                "short splash
     color molokai                   " load a colorscheme
     set tabpagemax=15               " only show 15 tabs
     set showmode                    " display the current mode
@@ -213,10 +215,10 @@
 
         " for cabal bin "Directory"
         let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
-    "ctrlp {{{ 
+    "ctrlp { 
         let g:ctrlp_map = '<Leader>t'
         let g:ctrlp_working_path_mode = 0
-    "}}}
+    "}
     " Delimitmate {
         au FileType * let b:delimitMate_autoclose = 1
 
@@ -300,6 +302,9 @@
     "  neco-ghc {
         "let $PATH=$PATH."/home/japrogramer/.cabal/bin"
         "p..................................sld;..
+    "}
+    "power-line {
+        let g:Powerline_symbols = 'fancy'
     "}
     "  tagbar {
        nnoremap <silent> <F12> :TagbarToggle<CR>
