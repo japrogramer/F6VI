@@ -304,7 +304,7 @@
         "p..................................sld;..
     "}
     "power-line {
-        let g:Powerline_symbols = 'fancy'
+        "let g:Powerline_symbols = 'fancy'
     "}
     "  tagbar {
        nnoremap <silent> <F12> :TagbarToggle<CR>
