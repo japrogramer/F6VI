@@ -71,7 +71,7 @@
 
 " Vim UI {
     set shortmess+=I                "short splash
-    color molokai                   " load a colorscheme
+    color wombat                    " load a colorscheme
     set tabpagemax=15               " only show 15 tabs
     set showmode                    " display the current mode
 
