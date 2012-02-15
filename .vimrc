@@ -226,8 +226,11 @@
         au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
     " }
     " EasyMotion {
-        "let g:EasyMotion_keys = '1234567890'
-        "let g:EasyMotion_do_shade = 0
+        let g:EasyMotion_keys = 'asdfg;lkjh'
+        "let g:EasyMotion_do_shade = 1
+        "let g:EasyMotion_grouping = 1
+        "hi EasyMotionTarget ctermbg=none ctermfg=#5B40BF
+        "hi EasyMotionShade ctermbg=none ctermfg=blue
         "let g:EasyMotion_leader_key = '<Leader>'
         "let g:EasyMotion_mapping_f = '_f'
         "let g:EasyMotion_mapping_T = '<C-T>'
