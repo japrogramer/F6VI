@@ -48,8 +48,8 @@
     set viewoptions=folds,options,cursor,unix,slash " better unix / windows compatibility
     set virtualedit=onemore         " allow for cursor beyond last character
     set history=1000                " Store a ton of history (default is 20)
-    set spell                       " spell checking on
-    
+    set nospell                       " spell checking on
+
     " Setting up the directories {
         set backup                      " backups are nice ...
         set undofile                    " so is persistent undo ...
@@ -59,7 +59,7 @@
         "set backupdir=$HOME/.vimbackup//  " but not when they clog .
         "set directory=$HOME/.vimswap//     " Same for swap files
         "set viewdir=$HOME/.vimviews//  " same for view files
-        
+
         "" Creating directories if they don't exist
         "silent execute '!mkdir -p $HVOME/.vimbackup'
         "silent execute '!mkdir -p $HOME/.vimswap'
@@ -70,8 +70,9 @@
 " }
 
 " Vim UI {
+    set guifont=Terminus\ 10
     set shortmess+=I                "short splash
-    color wombat                    " load a colorscheme
+    color kellys                    " load a colorscheme
     set tabpagemax=15               " only show 15 tabs
     set showmode                    " display the current mode
 
@@ -102,7 +103,7 @@
 
     set backspace=indent,eol,start  " backspace for dummys
     set linespace=0                 " No extra spaces between rows
-    set nu                          " Line numbers on
+    set relativenumber              " Line numbers on
     set showmatch                   " show matching brackets/parenthesis
     set incsearch                   " find as you type search
     set hlsearch                    " highlight search terms
@@ -148,7 +149,7 @@
     "quick escape
     imap ;; <Esc>
 
-    " Easier moving in tabs and windows
+    " Easier moving in windows
     map <C-J> <C-W>j<C-W>_
     map <C-K> <C-W>k<C-W>_
     map <C-L> <C-W>l<C-W>_
@@ -157,17 +158,18 @@
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
+    " Convenience
+    nnoremap <C-S-l> : tabnext<cr>
+    nnoremap <C-S-h> : tabprevious<cr>
     nnoremap <M-j> <C-f>
     nnoremap <M-k> <C-b>
-
-    " The following two lines conflict with moving to top and bottom of the
-    " screen
-    " If you prefer that functionality, comment them out.
-    map <S-H> gT          
-    map <S-L> gt
+    nnoremap <M-h> <S-h>
+    nnoremap <M-l> <S-l>
+    nnoremap <M-m> <S-m>
+    nnoremap <S-k> kddpkJ
 
     " Stupid shift key fixes
-    cmap W w                        
+    cmap W w
     cmap WQ wq
     cmap wQ wq
     cmap Q q
@@ -218,6 +220,7 @@
     "ctrlp { 
         let g:ctrlp_map = '<Leader>t'
         let g:ctrlp_working_path_mode = 0
+        set wildignore+=*/.git/*,*/.hg/*,*/.svn/*  " Linux
     "}
     " Delimitmate {
         au FileType * let b:delimitMate_autoclose = 1
@@ -226,54 +229,23 @@
         au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
     " }
     " EasyMotion {
-        let g:EasyMotion_keys = 'asdfg;lkjh'
+        let g:EasyMotion_keys = 'asdfgzxcvbqwert;lkjhyuiopnm'
         "let g:EasyMotion_do_shade = 1
-        "let g:EasyMotion_grouping = 1
+        let g:EasyMotion_grouping = 2
         "hi EasyMotionTarget ctermbg=none ctermfg=#5B40BF
         "hi EasyMotionShade ctermbg=none ctermfg=blue
         "let g:EasyMotion_leader_key = '<Leader>'
         "let g:EasyMotion_mapping_f = '_f'
         "let g:EasyMotion_mapping_T = '<C-T>'
     "}
-    " headlights {
-        let g:headlights_use_plugin_menu = 0
-        "Default value: 0
-        "Create menus for bundle script files: >
-        let g:headlights_show_files = 0
-        "Default value: 0
-        "Create menus for bundle commands: >
-        let g:headlights_show_commands = 1
-        "Default value: 1
-        "Create menus for bundle mappings: >
-        let g:headlights_show_mappings = 1
-        "Default value: 1
-        "Create menus for bundle abbreviations: >
-        let g:headlights_show_abbreviations = 0
-        "Default value: 0
-        "Create menus for global bundle functions: >
-        let g:headlights_show_functions = 0
-        "Default value: 0
-        "Create menus for bundle highlights: >
-        let g:headlights_show_highlights = 0
-        "Default value: 0
-        "Create menus for load order of plugin files: >
-        let g:headlights_show_load_order = 0
-        "Default value: 0
-        "Group bundles that share the same root together: >
-        let g:headlights_smart_menus = 1
-        "Default value: 1
-        "Enable debug mode and create menus to access the log file: >
-        let g:headlights_debug_mode = 0
-        "Default value: 0 (1 in the event of a Headlights exception)
-    " }
     " NerdTree {
-        map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+        map <C-d> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
         map <leader>e :NERDTreeFind<CR>
         nmap <leader>nt :NERDTreeFind<CR>
 
         let NERDTreeShowBookmarks=1
         let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-        let NERDTreeChDirMode=0
+        let NERDTreeChDirMode=2
         let NERDTreeQuitOnOpen=1
         let NERDTreeShowHidden=1
         let NERDTreeKeepTreeInNewTab=1
