@@ -159,8 +159,8 @@
     nnoremap j gj
     nnoremap k gk
     " Convenience
-    nnoremap <C-S-l> : tabnext<cr>
-    nnoremap <C-S-h> : tabprevious<cr>
+    nnoremap <C-Right> :tabnext<cr>
+    nnoremap <C-Left>  :tabprevious<cr>
     nnoremap <M-j> <C-f>
     nnoremap <M-k> <C-b>
     nnoremap <M-h> <S-h>
@@ -174,7 +174,6 @@
     cmap wQ wq
     cmap Q q
     cmap Tabe tabe
-
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
         
