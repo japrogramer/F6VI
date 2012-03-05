@@ -1,6 +1,6 @@
 " Modeline and Notes {
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker :
-" 
+"
 "   This is the personal .vimrc file of Japrogramer
 "
 " }
@@ -13,12 +13,12 @@
 
     " Windows Compatible {
         " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
-        " across (heterogeneous) systems easier. 
+        " across (heterogeneous) systems easier.
         if has('win32') || has('win64')
           set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
         endif
     " }
-    " 
+    "
     " Setup Bundle Support {
     " The next two lines ensure that the ~/.vim/bundle/ system works
         runtime! bundle/vim-pathogen/autoload/pathogen.vim
@@ -107,7 +107,7 @@
     set showmatch                   " show matching brackets/parenthesis
     set incsearch                   " find as you type search
     set hlsearch                    " highlight search terms
-    set winminheight=0              " windows can be 0 line high 
+    set winminheight=0              " windows can be 0 line high
     set ignorecase                  " case insensitive search
     set smartcase                   " case sensitive when uc present
     set smartindent                 " context sensitive indenting
@@ -131,7 +131,7 @@
     set tabstop=4                   " an indentation every four columns
     set softtabstop=4               " let backspace delete indent
     set expandtab                   " tabs are spaces, not tabs
-    "set matchpairs+=<:>                " match, to be used with % 
+    "set matchpairs+=<:>                " match, to be used with %
     set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
     "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
     " Remove trailing whitespaces and ^M chars
@@ -154,13 +154,11 @@
     map <C-K> <C-W>k<C-W>_
     map <C-L> <C-W>l<C-W>_
     map <C-H> <C-W>h<C-W>_
-    
+
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
     " Convenience
-    nnoremap <C-Right> :tabnext<cr>
-    nnoremap <C-Left>  :tabprevious<cr>
     nnoremap <M-j> <C-f>
     nnoremap <M-k> <C-b>
     nnoremap <M-h> <S-h>
@@ -176,7 +174,7 @@
     cmap Tabe tabe
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
-        
+
     """ Code folding options
     nmap <leader>f0 :set foldlevel=0<CR>
     nmap <leader>f1 :set foldlevel=1<CR>
@@ -199,7 +197,7 @@
 
     " visual shifting (does not exit Visual mode)
     vnoremap < <gv
-    vnoremap > >gv 
+    vnoremap > >gv
 
     " Fix home and end keybindings for screen, particularly on mac
     " - for some reason this fixes the arrow keys too. huh.
@@ -207,16 +205,14 @@
     imap [F $
     map [H g0
     imap [H g0
-        
+
     " For when you forget to sudo.. Really Write the file.
     cmap w!! w !sudo tee % >/dev/null
 " }
 
 " Plugins {
 
-        " for cabal bin "Directory"
-        let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
-    "ctrlp { 
+    "ctrlp {
         let g:ctrlp_map = '<Leader>t'
         let g:ctrlp_working_path_mode = 0
         set wildignore+=*/.git/*,*/.hg/*,*/.svn/*  " Linux
@@ -250,32 +246,32 @@
         let NERDTreeKeepTreeInNewTab=1
     " }
     " Neocomplete {
-        autocmd FileType python set omnifunc=pythoncomplete#Complete
+        autocmd FileType python     set omnifunc=pythoncomplete#Complete
         autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-        autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-        autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-        autocmd FileType c set omnifunc=ccomplete#Complete
+        autocmd FileType html       set omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType css        set omnifunc=csscomplete#CompleteCSS
+        autocmd FileType xml        set omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType php        set omnifunc=phpcomplete#CompletePHP
+        autocmd FileType c          set omnifunc=ccomplete#Complete
         let g:neocomplcache_enable_at_startup = 1
         " Recommended key-mappings.
-        inoremap <expr><CR>  neocomplcache#close_popup()."\<CR>"
+        inoremap <expr><CR>   neocomplcache#close_popup()."\<CR>"
         " <TAB>: completion.
         inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
         " SuperTab like snippets behavior.
         "inoremap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
         " <C-h>, <BS>: close popup and delete backword char.
         inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-        inoremap <expr><C-y>  neocomplcache#close_popup()
-        inoremap <expr><C-e>  neocomplcache#cancel_popup()
+        inoremap <expr><BS>  neocomplcache#smart_close_popup()."\<C-h>"
+        inoremap <expr><C-y> neocomplcache#close_popup()
+        inoremap <expr><C-e> neocomplcache#cancel_popup()
         if !exists('g:neocomplcache_omni_patterns')
             let g:neocomplcache_omni_patterns = {}
         endif
     " }
     "  neco-ghc {
-        "let $PATH=$PATH."/home/japrogramer/.cabal/bin"
-        "p..................................sld;..
+        " for cabal bin "Directory"
+        let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
     "}
     "power-line {
         "let g:Powerline_symbols = 'fancy'
@@ -326,12 +322,12 @@
 
 function! InitializeDirectories()
   let separator = "."
-  let parent = $HOME 
+  let parent = $HOME
   let prefix = '.vim'
-  let dir_list = { 
-              \ 'backup': 'backupdir', 
-              \ 'views': 'viewdir', 
-              \ 'swap': 'directory', 
+  let dir_list = {
+              \ 'backup': 'backupdir',
+              \ 'views': 'viewdir',
+              \ 'swap': 'directory',
               \ 'undo': 'undodir' }
 
   for [dirname, settingname] in items(dir_list)
@@ -344,13 +340,13 @@ function! InitializeDirectories()
       if !isdirectory(directory)
           echo "Warning: Unable to create backup directory: " . directory
           echo "Try: mkdir -p " . directory
-      else  
+      else
           let directory = substitute(directory, " ", "\\\\ ", "")
           exec "set " . settingname . "=" . directory
       endif
   endfor
 endfunction
-call InitializeDirectories() 
+call InitializeDirectories()
 
 function! NERDTreeInitAsNeeded()
     redir => bufoutput
