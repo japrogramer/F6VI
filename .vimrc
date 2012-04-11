@@ -72,9 +72,10 @@
 " Vim UI {
     set guifont=Terminus\ 10
     set shortmess+=I                "short splash
-    color kellys                    " load a colorscheme
+    color baycomb                   " load a colorscheme
     set tabpagemax=15               " only show 15 tabs
     set showmode                    " display the current mode
+    "set t_Co=256                    " terminal colors
 
     set cursorline                  " highlight current line
     set cursorcolumn                " highlight current line
@@ -244,6 +245,11 @@
         let NERDTreeQuitOnOpen=1
         let NERDTreeShowHidden=1
         let NERDTreeKeepTreeInNewTab=1
+    " }
+    "Nerdcommenter {
+    "let g:NERDCustomDelimiters = {
+        "\ 'haskell': { 'left': '{-', 'right': '-}', 'leftAlt': '{-|', 'rightAlt': '-}'}
+        "\}
     " }
     " Neocomplete {
         autocmd FileType python     set omnifunc=pythoncomplete#Complete
