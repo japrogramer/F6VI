@@ -72,7 +72,7 @@
 " Vim UI {
     set guifont=Terminus\ 10
     set shortmess+=I                "short splash
-    color baycomb                   " load a colorscheme
+    color kellys                    " load a colorscheme
     set tabpagemax=15               " only show 15 tabs
     set showmode                    " display the current mode
     "set t_Co=256                    " terminal colors
@@ -213,6 +213,9 @@
 
 " Plugins {
 
+    "backgroundcolor {
+        call togglebg#map("<F5>")
+    "}
     "ctrlp {
         let g:ctrlp_map = '<Leader>t'
         let g:ctrlp_working_path_mode = 0
