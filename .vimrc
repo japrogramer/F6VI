@@ -120,6 +120,7 @@
     set showmode                    " Display the current mode
 
     set cursorline                  " Highlight current line
+    set cursorcolumn                " Highlight current column
 
     highlight clear SignColumn      " SignColumn should match background for
                                     " things like vim-gitgutter
@@ -363,11 +364,11 @@
 
 " Plugins {{
 
-    "backgroundcolor {{
+    " backgroundcolor {{
         call togglebg#map("<F5>")
     "}}
 
-    "ctrlp {{
+    " ctrlp {{
         let g:ctrlp_map = '<Leader>t'
         nmap <Leader>b :CtrlPBuffer<CR>
         let g:ctrlp_working_path_mode = 0
@@ -481,7 +482,7 @@
         let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
     "}}
 
-    "power-line {{
+    " power-line {{
         "let g:Powerline_symbols = 'fancy'
     "}}
 
@@ -498,20 +499,20 @@
     " }}
 
     " sparkup {{
-        "function! SparkKey()
-            "ru ftplugin/html/sparkup.vim
+        function! SparkKey()
+            ru ftplugin/html/sparkup.vim
             let g:sparkup = 'sparkup'
-            "if !exists('g:sparkupArgs')
+            if !exists('g:sparkupArgs')
                 let g:sparkupArgs  = '--no-last-newline'
-            "endif
-            if !exists('g:sparkupExecuteMapping')
-                let g:sparkupExecuteMapping = '<c-s>'
             endif
-            "if !exists('g:sparkupNextMapping')
+            if !exists('g:sparkupExecuteMapping')
+                let g:sparkupExecuteMapping = '<c-n>'
+            endif
+            if !exists('g:sparkupNextMapping')
                 let g:sparkupNextMapping = '<c-t>'
-            "endif
-        "endfunction
-        "au FileType html call SparkKey()
+            endif
+        endfunction
+        au FileType html call SparkKey()
     " }}
     "
 
