@@ -514,7 +514,12 @@
         endfunction
         au FileType html call SparkKey()
     " }}
-    "
+
+    " surround {{
+        let g:surround_{char2nr("v")} = "{{ \r }}"
+        let g:surround_{char2nr("t")} = "{% \r %}"
+        let g:surround_{char2nr("c")} = "{# \r #}"
+    " }}
 
 " }}
 
