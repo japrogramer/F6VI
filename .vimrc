@@ -516,9 +516,9 @@
     " }}
 
     " surround {{
-        let g:surround_{char2nr("v")} = "{{ \r }}"
-        let g:surround_{char2nr("t")} = "{% \r %}"
-        let g:surround_{char2nr("c")} = "{# \r #}"
+        let g:surround_{char2nr("V")} = "{{ \r }}"
+        let g:surround_{char2nr("T")} = "{% \r %}"
+        let g:surround_{char2nr("C")} = "{# \r #}"
     " }}
 
 " }}
