@@ -455,7 +455,7 @@
         autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
         " Recommended key-mappings.
-        inoremap <expr><CR>   neocomplcache#close_popup()."\<CR>"
+        inoremap <expr><s-CR> pumvisible() ? neocomplcache#smart_close_popup()"\<CR>" : "\<CR>"
         " <TAB>: completion.
         inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
         " SuperTab like snippets behavior.
@@ -463,7 +463,7 @@
         " <C-h>, <BS>: close popup and delete backword char.
         inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
         inoremap <expr><BS>  neocomplcache#smart_close_popup()."\<C-h>"
-        inoremap <expr><C-y> neocomplcache#close_popup()
+        inoremap <expr><C-y> neocomplcache#smart_close_popup()
         inoremap <expr><C-e> neocomplcache#cancel_popup()
 
         " Enable heavy omni completion.
@@ -475,6 +475,7 @@
         let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
         let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
         let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
     " }}
 
     "  neco-ghc {{
