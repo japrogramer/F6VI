@@ -218,6 +218,7 @@
     autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType html setlocal foldmethod=syntax
     " preceding line best in a plugin but here for now.
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
@@ -449,7 +450,7 @@
         autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
         autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType python setlocal omnifunc=python3complete#Complete
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
         autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
         autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
@@ -485,6 +486,9 @@
 
     " power-line {{
         "let g:Powerline_symbols = 'fancy'
+        "python3 from powerline.vim import setup as powerline_setup
+        "python3 powerline_setup()
+        "python3 del powerline_setup
     "}}
 
     "  tagbar {{
@@ -535,7 +539,7 @@
         set guioptions-=r
         set lines=40                " 40 lines of text instead of 24,
     else
-        set term=builtin_ansi       " Make arrow and other keys work
+        "set term=builtin_ansi       " Make arrow and other keys work
     endif
 " }}
 
