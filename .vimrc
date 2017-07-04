@@ -22,8 +22,7 @@
     " Setup Bundle Support {{
     " The next two lines ensure that the ~/.vim/bundle/ system works
         runtime! bundle/vim-pathogen/autoload/pathogen.vim
-        silent! call pathogen#helptags()
-        silent! call pathogen#runtime_append_all_bundles()
+        execute pathogen#infect()
     " }}
 
 " }}
@@ -485,6 +484,7 @@
     "}}
 
     " power-line {{
+        let g:powerline_pycmd = "py3"
         "let g:Powerline_symbols = 'fancy'
         "python3 from powerline.vim import setup as powerline_setup
         "python3 powerline_setup()
