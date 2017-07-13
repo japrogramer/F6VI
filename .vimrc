@@ -9,6 +9,7 @@
     " Basics {{
         set nocompatible        " must be first line
         set background=dark     " Assume a dark background
+        set mouse=r
     " }}
 
     " Windows Compatible {{
