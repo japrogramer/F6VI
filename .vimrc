@@ -8,6 +8,12 @@
 " Environment {{
     " Basics {{
     set nocompatible        " must be first line
+    " Figure out the system Python for Neovim.
+    if exists("$VIRTUAL_ENV")
+        let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
+    else
+        let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+    endif
     " }}
 
     " Windows Compatible {{
@@ -19,9 +25,45 @@
     " }}
     "
     " Setup Bundle Support {{
-    " The next two lines ensure that the ~/.vim/bundle/ system works
-    runtime! bundle/vim-pathogen/autoload/pathogen.vim
-    execute pathogen#infect()
+    " auto-install vim-plug
+    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+      silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim--create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      autocmd VimEnter * PlugInstall
+    endif
+    " Specify a directory for plugins
+    call plug#begin('~/.vim/plugged')
+    Plug 'mileszs/ack.vim'
+    Plug 'mileszs/ack.vim'
+    Plug 'rstacruz/sparkup'
+    Plug 'spf13/snipmate.vim'
+    Plug 'Lokaltog/vim-easymotion'
+    Plug 'scrooloose/nerdtree'
+    Plug 'tpope/vim-fugitive'
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'spf13/snipmate-snippets'
+    Plug 'tomtom/tlib_vim'
+    Plug 'ujihisa/neco-ghc'
+    Plug 'tpope/vim-pathogen'
+    Plug 'godlygeek/tabular'
+    Plug 'majutsushi/tagbar'
+    Plug 'bitc/lushtags'
+    Plug 'tpope/vim-surround'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'kchmck/vim-coffee-script'
+    Plug 'kien/ctrlp.vim'
+    Plug 'Raimondi/delimitMate'
+    Plug 'altercation/vim-colors-solarized'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'chriskempson/base16-vim'
+    Plug 'editorconfig/editorconfig-vim'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'zchee/deoplete-jedi'
+
+    " Initialize plugin system
+    call plug#end()
+
+
     if filereadable(expand("~/.vimrc_background"))
         let base16colorspace=256
         source ~/.vimrc_background
@@ -359,6 +401,11 @@
         au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
     " }}
 
+    " deoplete {{
+        " Use deoplete.
+        let g:deoplete#enable_at_startup = 1
+    " }}
+
     " EasyMotion {{
         let g:EasyMotion_keys = 'asdfgzxcvbqwert;lkjhyuiopnm'
         "let g:EasyMotion_do_shade = 1
@@ -419,81 +466,6 @@
         "\}
     " }}
 
-    " Neocomplete {{
-
-	" Enable omni completion.
-    " Disable AutoComplPop.
-    let g:acp_enableAtStartup = 0
-    " Use neocomplete.
-    let g:neocomplete#enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplete#enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-    " Define dictionary.
-    let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
-
-    " Define keyword.
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-    " Plugin key-mappings.
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-    " Recommended key-mappings.
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-      return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-      " For no inserting <CR> key.
-      "return pumvisible() ? "\<C-y>" : "\<CR>"
-    endfunction
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-    " Close popup by <Space>.
-    "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-    " AutoComplPop like behavior.
-    "let g:neocomplete#enable_auto_select = 1
-
-    " Shell like behavior(not recommended).
-    "set completeopt+=longest
-    "let g:neocomplete#enable_auto_select = 1
-    "let g:neocomplete#disable_auto_complete = 1
-    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-    " For perlomni.vim setting.
-    " https://github.com/c9s/perlomni.vim
-    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-    " }}
-
     "  neco-ghc {{
         " for cabal bin "Directory"
         let $PATH=$PATH.":/home/japrogramer/.cabal/bin"
@@ -501,6 +473,22 @@
 
     "  tagbar {{
        nnoremap <silent> <F12> :TagbarToggle<CR>
+       if executable('coffeetags')
+          let g:tagbar_type_coffee = {
+                     \ 'ctagsbin' : 'coffeetags',
+                     \ 'ctagsargs' : ' --include-vars ',
+                     \ 'kinds' : [
+                         \ 'f:functions:0',
+                         \ 'o:objecs:1',
+                     \ ],
+                     \ 'sro' : ".",
+                     \ 'kind2scope' : {
+                         \ 'f' : 'functions',
+                         \ 'o' : 'objecs',
+                     \ }
+                 \ }
+      endif
+
     "}}
 
     " SnipMate {{

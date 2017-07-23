@@ -1,6 +1,7 @@
 .DS_Store
 *.pyc
 *._*
+*.vim/plugged/
 *.vim/sessions/
 *.vim/.netrwhist
 *.vim/spell
