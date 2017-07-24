@@ -32,32 +32,31 @@
     endif
     " Specify a directory for plugins
     call plug#begin('~/.vim/plugged')
-    Plug 'mileszs/ack.vim'
-    Plug 'mileszs/ack.vim'
-    Plug 'rstacruz/sparkup'
-    Plug 'spf13/snipmate.vim'
-    Plug 'Lokaltog/vim-easymotion'
-    Plug 'scrooloose/nerdtree'
-    Plug 'tpope/vim-fugitive'
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'spf13/snipmate-snippets'
-    Plug 'tomtom/tlib_vim'
-    Plug 'ujihisa/neco-ghc'
-    Plug 'tpope/vim-pathogen'
-    Plug 'godlygeek/tabular'
-    Plug 'majutsushi/tagbar'
+        
+    "Plug 'altercation/vim-colors-solarized'
     Plug 'bitc/lushtags'
-    Plug 'tpope/vim-surround'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'kchmck/vim-coffee-script'
-    Plug 'kien/ctrlp.vim'
-    Plug 'Raimondi/delimitMate'
-    Plug 'altercation/vim-colors-solarized'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
     Plug 'chriskempson/base16-vim'
     Plug 'editorconfig/editorconfig-vim'
+    Plug 'godlygeek/tabular'
+    Plug 'honza/vim-snippets'
+    Plug 'kchmck/vim-coffee-script'
+    Plug 'kien/ctrlp.vim'
+    Plug 'Lokaltog/vim-easymotion'
+    Plug 'majutsushi/tagbar'
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'mileszs/ack.vim'
+    Plug 'Raimondi/delimitMate'
+    Plug 'rstacruz/sparkup'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'scrooloose/nerdtree'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'SirVer/ultisnips'
+    Plug 'tomtom/tlib_vim'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-surround'
+    Plug 'ujihisa/neco-ghc'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
     Plug 'zchee/deoplete-jedi'
 
     " Initialize plugin system
@@ -384,7 +383,19 @@
 " Plugins {{
 
     " backgroundcolor {{
-        call togglebg#map("<F5>")
+    set background=dark         " Assume a dark background
+
+    " Allow to trigger background
+    function! ToggleBG()
+        let s:tbg = &background
+        " Inversion
+        if s:tbg == "dark"
+            set background=light
+        else
+            set background=dark
+        endif
+    endfunction
+    noremap <leader>bg :call ToggleBG()<CR>
     "}}
 
     " ctrlp {{
@@ -404,6 +415,8 @@
     " deoplete {{
         " Use deoplete.
         let g:deoplete#enable_at_startup = 1
+        let g:deoplete#omni_patterns = {}
+		let g:deoplete#omni_patterns.javascript = '[^. *\t]\.\w*'
     " }}
 
     " EasyMotion {{
@@ -472,7 +485,7 @@
     "}}
 
     "  tagbar {{
-       nnoremap <silent> <F12> :TagbarToggle<CR>
+       nnoremap <leader> <bar> :TagbarToggle<CR>
        if executable('coffeetags')
           let g:tagbar_type_coffee = {
                      \ 'ctagsbin' : 'coffeetags',
@@ -491,12 +504,11 @@
 
     "}}
 
-    " SnipMate {{
-        " Setting the author var
-        " If forking, please overwrite in your .vimrc.local file
-        let g:snips_author = 'Steve Francia <steve.francia@gmail.com>'
-        " Shortcut for reloading snippets, useful when developing
-        nnoremap ,smr <esc>:exec ReloadAllSnippets()<cr>
+    " ultisnips {{
+    let g:UltiSnipsExpandTrigger       = "<tab>"
+    let g:UltiSnipsJumpForwardTrigger  = "<tab>"
+    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+    let g:UltiSnipsListSnippets        = "<C-F>"
     " }}
 
     " sparkup {{
@@ -557,10 +569,10 @@
         " To specify a different directory in which to place the vimbackup,
         " vimviews, vimundo, and vimswap files/directories, add the following to
         " your .vimrc.before.local file:
-        "   let g:spf13_consolidated_directory = <full path to desired directory>
-        "   eg: let g:spf13_consolidated_directory = $HOME . '/.vim/'
-        if exists('g:spf13_consolidated_directory')
-            let common_dir = g:spf13_consolidated_directory . prefix
+        "   let g:F6VI_consolidated_directory = <full path to desired directory>
+        "   eg: let g:F6VI_consolidated_directory = $HOME . '/.vim/'
+        if exists('g:F6VI_consolidated_directory')
+            let common_dir = g:F6VI_consolidated_directory . prefix
         else
             let common_dir = parent . '/.' . prefix
         endif
@@ -602,8 +614,8 @@
     function! StripTrailingWhitespace()
         " To disable the stripping of whitespace, add the following to your
         " .vimrc.before.local file:
-        "   let g:spf13_keep_trailing_whitespace = 1
-        if !exists('g:spf13_keep_trailing_whitespace')
+        "   let g:F6VI_keep_trailing_whitespace = 1
+        if !exists('g:F6VI_keep_trailing_whitespace')
             " Preparation: save last search, and cursor position.
             let _s=@/
             let l = line(".")
