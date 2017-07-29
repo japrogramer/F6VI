@@ -38,6 +38,7 @@
     Plug 'chriskempson/base16-vim'
     Plug 'dyng/ctrlsf.vim'
     Plug 'editorconfig/editorconfig-vim'
+    "Plug 'edkolev/tmuxline.vim'
     Plug 'godlygeek/tabular'
     Plug 'honza/vim-snippets'
     Plug 'kchmck/vim-coffee-script'
