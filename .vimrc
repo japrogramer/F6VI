@@ -36,6 +36,7 @@
     "Plug 'altercation/vim-colors-solarized'
     Plug 'bitc/lushtags'
     Plug 'chriskempson/base16-vim'
+    Plug 'dyng/ctrlsf.vim'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'godlygeek/tabular'
     Plug 'honza/vim-snippets'
@@ -403,6 +404,10 @@
         nmap <Leader>b :CtrlPBuffer<CR>
         let g:ctrlp_working_path_mode = 0
         set wildignore+=*/.git/*,*/.hg/*,*/.svn/*  " Linux
+    "}}
+
+    " ctrlsf.vim {{
+        nmap <Leader>s <Plug>CtrlSFPrompt
     "}}
 
     " Delimitmate {{
