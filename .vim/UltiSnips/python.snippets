@@ -7,3 +7,22 @@ import logging
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 endsnippet
+
+snippet dgra "graphene imports for django" b
+from graphene_django.types import DjangoObjectType
+import graphene
+endsnippet
+
+
+snippet tschema "Test a graphene schema" b
+from ..schema import Query
+
+import graphene
+
+
+class ${1:Test}Schema(Query, graphene.ObjectType):
+	"""Schema for testing"""
+	pass
+
+test_schema = graphene.Schema(query=${2:$1}Schema)
+endsnippet
