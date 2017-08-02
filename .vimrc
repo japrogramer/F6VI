@@ -241,6 +241,8 @@
     " preceding line best in a plugin but here for now.
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+    " play well with django
+    autocmd BufNewFile,BufRead $ENV_DIR/*/*.py set filetype+=.django
 
     " Workaround vim-commentary for Haskell
     autocmd FileType haskell setlocal commentstring=--\ %s
@@ -472,7 +474,6 @@
         nmap <Leader>a:: :Tabularize /:\zs<CR>
         vmap <Leader>a:: :Tabularize /:\zs<CR>
         nmap <Leader>a, :Tabularize /,<CR>
-        vmap <Leader>a, :Tabularize /,<CR>
         nmap <Leader>a,, :Tabularize /,\zs<CR>
         vmap <Leader>a,, :Tabularize /,\zs<CR>
         nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
@@ -511,10 +512,10 @@
     "}}
 
     " ultisnips {{
-    let g:UltiSnipsExpandTrigger       = "<tab>"
-    let g:UltiSnipsJumpForwardTrigger  = "<tab>"
-    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-    let g:UltiSnipsListSnippets        = "<C-F>"
+    let g:UltiSnipsExpandTrigger       = "<c-j>"
+    let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
+    let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
+    let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
     " }}
 
     " sparkup {{
@@ -535,8 +536,14 @@
     " }}
 
     " surround {{
-        let g:surround_{char2nr("V")} = "{{ \r }}"
-        let g:surround_{char2nr("T")} = "{% \r %}"
+        let b:surround_{char2nr("v")} = "{{ \r }}"
+        let b:surround_{char2nr("{")} = "{{ \r }}"
+        let b:surround_{char2nr("%")} = "{% \r %}"
+        let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
+        let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
+        let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
+        let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
+        let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
         let g:surround_{char2nr("C")} = "{# \r #}"
     " }}
 
