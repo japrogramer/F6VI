@@ -1,19 +1,29 @@
 priority -50
-
-snippet logs  "get a python logger" b
-# import the logging library
-import logging
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
+# imports
+################################################################
+snippet trans "The translation module" b
+from django.utils.translation import ugettext_lazy as _
 endsnippet
 
-snippet dgra "graphene imports for django" b
+snippet iurl "Import url boilerplate" b
+from django.conf.urls import url
+
+from . import views
+endsnippet
+
+snippet uurl "url function call for urls.py" b
+url(regex=r'^${1:}$',
+	view=views.${2:Model}${3:-S-}View.as_view(),
+	name='${3/.+/\L$0\E/g}'),
+endsnippet
+
+snippet idgra "graphene imports for django" b
 from graphene_django.types import DjangoObjectType
 import graphene
 endsnippet
 
-
+# Test Snippets
+################################################################
 snippet tschema "Test a graphene schema" b
 from ..schema import Query
 
@@ -25,4 +35,56 @@ class ${1:Test}Schema(Query, graphene.ObjectType):
 	pass
 
 test_schema = graphene.Schema(query=${2:$1}Schema)
+endsnippet
+
+snippet tgq "Test a basic query on a schema" b
+def test_${1:base}(self):
+    query = '''
+        query {
+            ${1/.+/$0/g:base} (uuid: "%s") {
+			${2:name}
+            uuid
+            }
+        }
+        ''' % self.user1.uuid
+
+    expected = {'${1/.+/$0/g:base}': {
+            '$2': '%s' % self.${1/.+/$0/g:base}1.$2 ,
+            'uuid': '%s' % self.${1/.+/$0/g:base}1.uuid
+            }}
+    result = test_schema.execute(query)
+
+    assert not result.errors
+    assert result.data == expected
+endsnippet
+
+# Graphene
+################################################################
+snippet gboiler "graphene boilerplate" b
+class ${1/.+/$0/g:Model}Type(DjangoObjectType):
+
+    """Query API def for Product"""
+
+    class Meta:
+        model = $1
+        only_fields = (${2:fields list})
+
+
+class ${1/.+/\L$0\E/g:model}Query(graphene.AbstractType):
+    ${1/.+/\L$0\E/g:model} = graphene.Field(${1/.+/$0/g:Model}Type,
+            uuid = graphene.ID())
+    all_${1/.+/\L$0\E/g:model} = graphene.List(${1/.+/$0/g:Model}Type)
+
+    def resolve_all_${1/.+/$0/g:Model}(self, args, context, info):
+        return $1.objects.all()
+
+    def resolve_product(self, args, context, info):
+        uuid = args.get('uuid')
+        try:
+            logger.info('Validating uuid for Product graph Query')
+            val_uuid.UUID(uuid)
+        except (AttributeError, ValueError):
+            return None
+
+        return $1.objects.get(uuid=uuid)
 endsnippet

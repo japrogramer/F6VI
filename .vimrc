@@ -242,7 +242,7 @@
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
     " play well with django
-    autocmd BufNewFile,BufRead $ENV_DIR/*/*.py set filetype+=.django
+    autocmd BufNewFile,BufRead $ENV_DIR/*/*.py set filetype=python.django
 
     " Workaround vim-commentary for Haskell
     autocmd FileType haskell setlocal commentstring=--\ %s
@@ -424,7 +424,7 @@
         " Use deoplete.
         let g:deoplete#enable_at_startup = 1
         let g:deoplete#omni_patterns = {}
-		let g:deoplete#omni_patterns.javascript = '[^. *\t]\.\w*'
+        let g:deoplete#omni_patterns.javascript = '[^. *\t]\.\w*'
     " }}
 
     " EasyMotion {{
@@ -465,15 +465,21 @@
     " }}
 
     " Tabularize {{
+        "AddTabularPattern 1=    /^[^=]*\zs=
+        "AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
+
         nmap <Leader>a& :Tabularize /&<CR>
         vmap <Leader>a& :Tabularize /&<CR>
-        nmap <Leader>a= :Tabularize /=<CR>
-        vmap <Leader>a= :Tabularize /=<CR>
+        nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+        vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+        nmap <Leader>a=> :Tabularize /=><CR>
+        vmap <Leader>a=> :Tabularize /=><CR>
         nmap <Leader>a: :Tabularize /:<CR>
         vmap <Leader>a: :Tabularize /:<CR>
         nmap <Leader>a:: :Tabularize /:\zs<CR>
         vmap <Leader>a:: :Tabularize /:\zs<CR>
         nmap <Leader>a, :Tabularize /,<CR>
+        vmap <Leader>a, :Tabularize /,<CR>
         nmap <Leader>a,, :Tabularize /,\zs<CR>
         vmap <Leader>a,, :Tabularize /,\zs<CR>
         nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
@@ -512,7 +518,7 @@
     "}}
 
     " ultisnips {{
-    let g:UltiSnipsExpandTrigger       = "<c-j>"
+    let g:UltiSnipsExpandTrigger       = "<tab>"
     let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
     let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
     let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
