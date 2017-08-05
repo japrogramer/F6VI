@@ -13,12 +13,13 @@ endsnippet
 
 snippet uurl "url function call for urls.py" b
 url(regex=r'^${1:}$',
-	view=views.${2:Model}${3:-S-}View.as_view(),
-	name='${3/.+/\L$0\E/g}'),
+    view=views.${2:Model}${3:-S-}View.as_view(),
+    name='${3/.+/\L$0\E/g}'),
 endsnippet
 
 snippet idgra "graphene imports for django" b
 from graphene_django.types import DjangoObjectType
+from graphene import relay
 import graphene
 endsnippet
 
@@ -31,8 +32,8 @@ import graphene
 
 
 class ${1:Test}Schema(Query, graphene.ObjectType):
-	"""Schema for testing"""
-	pass
+    """Schema for testing"""
+    pass
 
 test_schema = graphene.Schema(query=${2:$1}Schema)
 endsnippet
@@ -42,7 +43,7 @@ def test_${1:base}(self):
     query = '''
         query {
             ${1/.+/$0/g:base} (uuid: "%s") {
-			${2:name}
+            ${2:name}
             uuid
             }
         }
@@ -63,23 +64,25 @@ endsnippet
 snippet gboiler "graphene boilerplate" b
 class ${1/.+/$0/g:Model}Type(DjangoObjectType):
 
-    """Query API def for Product"""
+    """Query API def for $1"""
 
     class Meta:
         model = $1
         only_fields = (${2:fields list})
 
+        interfaces = (relay.Node, )
 
-class ${1/.+/\L$0\E/g:model}Query(graphene.AbstractType):
-    ${1/.+/\L$0\E/g:model} = graphene.Field(${1/.+/$0/g:Model}Type,
+
+class ${1/.+/$0/g:model}Query(graphene.AbstractType):
+    ${1/.+/\L$0\E/g:model} = graphene.Field($1Type,
             uuid = graphene.ID())
-    all_${1/.+/\L$0\E/g:model} = graphene.List(${1/.+/$0/g:Model}Type)
+    all_${1/.+/\L$0\E/g:model}s = graphene.List($1Type)
 
-    def resolve_all_${1/.+/$0/g:Model}(self, args, context, info):
-        return $1.objects.all()
+    def resolve_all_${1/.+/\L$0\E/g:model}s(self, input, context, info):
+        return $1.objects.all().only(*$1Type.Meta.only_fields)
 
-    def resolve_product(self, args, context, info):
-        uuid = args.get('uuid')
+    def resolve_${1/.+/\L$0\E/g:model}(self, input, context, info):
+        uuid = input.get('uuid')
         try:
             logger.info('Validating uuid for Product graph Query')
             val_uuid.UUID(uuid)
@@ -87,4 +90,48 @@ class ${1/.+/\L$0\E/g:model}Query(graphene.AbstractType):
             return None
 
         return $1.objects.get(uuid=uuid)
+
+
+class New$1(graphene.ClientIDMutation):
+    ${1/.+/\L$0\E/g:model} = Field($1Type)
+    class Input:
+        name = graphene.String()
+
+    @classmethod
+    def mutate_and_get_payload(cls, input, context, info):
+        temp = $1(
+             name = input.get('name') ,
+        )
+        temp.save()
+        return New$1(${1/.+/\L$0\E/g:model}=temp)
+
+
+class Update$1(graphene.ClientIDMutation):
+    ${1/.+/\L$0\E/g:model} = Field($1Type)
+    class Input:
+        name = graphene.String()
+
+    @classmethod
+    def mutate_and_get_payload(cls, input, context, info):
+        temp = $1.objects.get(pk=from_global_id(input.get('id'))[1])
+        temp.save()
+        return Update$1(${1/.+/\L$0\E/g:model}=book)
+
+
+class Delete$1(graphene.ClientIDMutation):
+    ${1/.+/\L$0\E/g:model} = Field($1Type)
+    class Input:
+        name = graphene.String()
+
+    @classmethod
+    def mutate_and_get_payload(cls, input, context, info):
+        temp = $1.objects.get(pk=from_global_id(input.get('id'))[1])
+        temp.delete()
+        return Delete$1(${1/.+/\L$0\E/g:model}=book)
+
+
+class $1Mutation(graphene.AbstractType):
+    new_${1/.+/\L$0\E/g:model} = New$1.Field()
+    update_${1/.+/\L$0\E/g:model} = Update$1.Field()
+    delete_${1/.+/\L$0\E/g:model} = Delete$1.Field()
 endsnippet

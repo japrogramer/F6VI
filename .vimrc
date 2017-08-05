@@ -23,7 +23,7 @@
       set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
     endif
     " }}
-    "
+
     " Setup Bundle Support {{
     " auto-install vim-plug
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -32,13 +32,15 @@
     endif
     " Specify a directory for plugins
     call plug#begin('~/.vim/plugged')
-        
+
+    Plug 'airblade/vim-gitgutter'
     "Plug 'altercation/vim-colors-solarized'
     Plug 'bitc/lushtags'
     Plug 'chriskempson/base16-vim'
     Plug 'dyng/ctrlsf.vim'
-    Plug 'editorconfig/editorconfig-vim'
+    "Plug 'editorconfig/editorconfig-vim'
     "Plug 'edkolev/tmuxline.vim'
+    "Plug 'edkolev/promptline.vim'
     Plug 'godlygeek/tabular'
     Plug 'honza/vim-snippets'
     Plug 'kchmck/vim-coffee-script'
@@ -46,9 +48,9 @@
     Plug 'Lokaltog/vim-easymotion'
     Plug 'majutsushi/tagbar'
     Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'mattn/emmet-vim'
     Plug 'mileszs/ack.vim'
     Plug 'Raimondi/delimitMate'
-    Plug 'rstacruz/sparkup'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -59,6 +61,7 @@
     Plug 'ujihisa/neco-ghc'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'vim-syntastic/syntastic'
     Plug 'zchee/deoplete-jedi'
 
     " Initialize plugin system
@@ -80,6 +83,9 @@
 
 " General {{
 
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
     set background=dark         " Assume a dark background
     if !has('gui')
         "set term=$TERM          " Make arrow and other keys work
@@ -89,6 +95,7 @@
     set mouse=r                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
     scriptencoding utf-8
+    set encoding=utf-8
 
     if has ('x') && has ('gui') " On Linux use + register for copy-paste
         set clipboard=unnamedplus
@@ -170,6 +177,9 @@
 
     set cursorline                  " Highlight current line
     set cursorcolumn                " Highlight current column
+    set synmaxcol=128
+    set lazyredraw
+    syntax sync minlines=256
 
     highlight clear SignColumn      " SignColumn should match background for
                                     " things like vim-gitgutter
@@ -282,7 +292,10 @@
     " Faster navigation from normal to ex and from insert to normal mode
     nnoremap ; :
     imap ;; <Esc>
-
+    " delete current line and return to insert mode
+    inoremap <c-d> <Esc>ddi
+    " file path completion
+    inoremap <c-f> <c-x><c-f>
 
     " The following two lines conflict with moving to top and
     " bottom of the screen
@@ -464,6 +477,12 @@
         let NERDTreeKeepTreeInNewTab=1
     " }}
 
+" emmet {{
+    let g:user_emmet_mode='a'    " Enable all function in all mode.
+    let g:user_emmet_install_global = 0
+    autocmd FileType html,css EmmetInstall " Enable just for html/css
+" }}
+
     " Tabularize {{
         "AddTabularPattern 1=    /^[^=]*\zs=
         "AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
@@ -524,23 +543,6 @@
     let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
     " }}
 
-    " sparkup {{
-        function! SparkKey()
-            ru ftplugin/html/sparkup.vim
-            let g:sparkup = 'sparkup'
-            if !exists('g:sparkupArgs')
-                let g:sparkupArgs  = '--no-last-newline'
-            endif
-            if !exists('g:sparkupExecuteMapping')
-                let g:sparkupExecuteMapping = '<c-n>'
-            endif
-            if !exists('g:sparkupNextMapping')
-                let g:sparkupNextMapping = '<c-t>'
-            endif
-        endfunction
-        au FileType html call SparkKey()
-    " }}
-
     " surround {{
         let b:surround_{char2nr("v")} = "{{ \r }}"
         let b:surround_{char2nr("{")} = "{{ \r }}"
@@ -552,6 +554,28 @@
         let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
         let g:surround_{char2nr("C")} = "{# \r #}"
     " }}
+
+" syntastic {{
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_aggregate_errors = 1
+
+    let g:syntastic_python_checkers = ['flake8', 'pyflakes', 'pylint', 'python']
+
+    nmap <leader>sp :call <SID>SynStack()<CR>
+    function! <SID>SynStack()
+      if !exists("*synstack")
+        return
+      endif
+      echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    endfunc
+" }}
 
 " }}
 
@@ -646,29 +670,6 @@
             call cursor(l, c)
         endif
     endfunction
-    " }}
-
-    " Shell command {{
-    function! s:RunShellCommand(cmdline)
-        botright new
-
-        setlocal buftype=nofile
-        setlocal bufhidden=delete
-        setlocal nobuflisted
-        setlocal noswapfile
-        setlocal nowrap
-        setlocal filetype=shell
-        setlocal syntax=shell
-
-        call setline(1, a:cmdline)
-        call setline(2, substitute(a:cmdline, '.', '=', 'g'))
-        execute 'silent $read !' . escape(a:cmdline, '%#')
-        setlocal nomodifiable
-        1
-    endfunction
-
-    command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
-    " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
     " }}
 
 " }}
