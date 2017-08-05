@@ -1,0 +1,18 @@
+if version >= 700
+    set spl=en spell
+    set nospell
+endif
+
+noremap Q !!sh<cr>
+
+set nolist
+set t_Co=256
+colorscheme base16-ocean
+let g:airline_theme = 'base16_grayscale'
+let g:airline_powerline_fonts = 1
+
+autocmd BufNewFile,BufRead *.mqh set filetype=cpp
+autocmd BufNewFile,BufRead *.mq5 set filetype=cpp
+
+set list lcs=tab:>-,trail:¶
+"nmap <leader>fc :%!js-beautify --type html -j -q -B -f -<CR>

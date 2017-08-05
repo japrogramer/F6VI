@@ -1,0 +1,33 @@
+let g:F6VI_no_autochdir = 1
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'c'    : ['#(whoami)', '#(uptime | cut -d " " -f 1,2,3)'],
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W', '#F'],
+      \'x'    : '#(date)',
+      \'y'    : ['%R', '%a', '%Y'],
+      \'z'    : '#H'}
+
+if exists(':PromptlineSnapshot')
+" \ '$(temp=$(git rev-parse --short HEAD 2>/dev/null) && [ ! -z '$temp' ] && echo \\\${wrap}32\\\${end_wrap}$temp; unset temp || echo )'
+    let g:promptline_preset = {
+            \'a'     : [ promptline#slices#jobs(),
+                       \ promptline#slices#python_virtualenv(),
+                       \ '$USER' ],
+            \'b'     : [ promptline#slices#cwd(), ],
+            \'c'     : [
+                       \ promptline#slices#vcs_branch(),
+                       \ promptline#slices#git_status(),
+                       \ '$(git rev-parse --short HEAD 2>/dev/null)'],
+            \'warn'  : [ promptline#slices#last_exit_code() ],
+            \'x'     : ['${wrap}35${end_wrap}%*'],
+            \'z'     : [ promptline#slices#host() ]}
+
+    let g:promptline_symbols = {
+        \ 'left'       : '',
+        \ 'left_alt'   : '>',
+        \ 'dir_sep'    : ' / ',
+        \ 'truncation' : '...',
+        \ 'vcs_branch' : '+',
+        \ 'space'      : ' '}
+endif
