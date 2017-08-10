@@ -18,6 +18,7 @@ url(regex=r'^${1:}$',
 endsnippet
 
 snippet idgra "graphene imports for django" b
+from graphql_relay.node.node import from_global_id
 from graphene_django.types import DjangoObjectType
 from graphene import relay
 import graphene
@@ -54,6 +55,8 @@ def test_${1:base}(self):
             'uuid': '%s' % self.${1/.+/$0/g:base}1.uuid
             }}
     result = test_schema.execute(query)
+    /*- TODO: switch to variable_values for easier query creation <09-08-17,djapo> -*/
+    # result = test_schema.execute(query, variable_values=?)
 
     assert not result.errors
     assert result.data == expected
@@ -79,13 +82,13 @@ class ${1/.+/$0/g:Model}Type(DjangoObjectType):
 
 
 class ${1/.+/$0/g:model}Query(graphene.AbstractType):
-    ${1/.+/\L$0\E/g:model} = graphene.Field($1Type, uuid=graphene.ID())
+    ${1/.+/\L$0\E/g:model} = graphene.Field($1Type, ${3:uuid}=graphene.String())
     all_${1/.+/\L$0\E/g:model}s = graphene.List($1Type)
 
     def resolve_${1/.+/\L$0\E/g:model}(self, input, context, info):
         qs = $1Type.get_queryset()
-        uuid = input.get('uuid')
-        return qs.get(uuid=uuid)
+        $3 = input.get('$3')
+        return qs.get($3=$3)
 
     def resolve_all_${1/.+/\L$0\E/g:model}s(self, input, context, info):
         return $1Type.get_queryset()
@@ -93,7 +96,8 @@ class ${1/.+/$0/g:model}Query(graphene.AbstractType):
 
 class Create$1(graphene.Mutation):
     ${1/.+/\L$0\E/g:model} = graphene.Field($1Type)
-        form_messages = graphene.String()
+	form_messages = graphene.String()
+	status = graphene.Int()
 
     class Input:
         name = graphene.String()
@@ -113,7 +117,8 @@ class Create$1(graphene.Mutation):
 
 class Update$1(graphene.Mutation):
     ${1/.+/\L$0\E/g:model} = graphene.Field($1Type)
-        form_messages = graphene.String()
+	form_messages = graphene.String()
+	status = graphene.Int()
 
     class Input:
         name = graphene.String()
@@ -135,7 +140,7 @@ class Update$1(graphene.Mutation):
 
 class Delete$1(graphene.Mutation):
     ${1/.+/\L$0\E/g:model} = graphene.Field($1Type)
-        form_messages = graphene.String()
+    form_messages = graphene.String()
 
     class Input:
         name = graphene.String()
@@ -152,4 +157,15 @@ class $1Mutation(graphene.AbstractType):
     create_${1/.+/\L$0\E/g:model} = Create$1.Field()
     update_${1/.+/\L$0\E/g:model} = Update$1.Field()
     delete_${1/.+/\L$0\E/g:model} = Delete$1.Field()
+
+
+class $1Loader(DataLoader):
+    def batch_load_fn(self, keys):
+        # Here we return a promise that will result on the
+        # corresponding $1 for each key in keys
+        def process_res(res):
+            res_by_$3 = {str(row.$3): row for row in res}
+            return [res_by_$3.get(key, None) for key in keys]
+        return Promise.resolve($1Type.get_queryset().order_by().filter($3__in=keys)).\
+            then(lambda res: res if len(res) is len(keys) else process_res(res))
 endsnippet
