@@ -7,8 +7,8 @@ noremap Q !!sh<cr>
 
 set nolist
 set t_Co=256
-colorscheme base16-ocean
-let g:airline_theme = 'base16_grayscale'
+colorscheme base16-atelier-cave
+let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
 
 autocmd BufNewFile,BufRead *.mqh set filetype=cpp

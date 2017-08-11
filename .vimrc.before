@@ -7,7 +7,6 @@ let g:tmuxline_preset = {
       \'x'    : '#(date)',
       \'y'    : ['%R', '%a', '%Y'],
       \'z'    : '#H'}
-
 if exists(':PromptlineSnapshot')
 " \ '$(temp=$(git rev-parse --short HEAD 2>/dev/null) && [ ! -z '$temp' ] && echo \\\${wrap}32\\\${end_wrap}$temp; unset temp || echo )'
     let g:promptline_preset = {
