@@ -75,6 +75,13 @@ class ${1/.+/$0/g:Model}Type(DjangoObjectType):
 
         interfaces = (relay.Node, )
 
+    def resolve_id(self, args, context, info):
+        return str(self.${3:uuid})
+
+    @classmethod
+    def get_node(cls, id, context, info):
+        return context.dataloaders.${1/.+/\L$0\E/g:model}.load(id)
+
     @classmethod
     def get_queryset(cls):
         qs = cls._meta.model.objects.all().only(*cls._meta.only_fields)
@@ -82,7 +89,7 @@ class ${1/.+/$0/g:Model}Type(DjangoObjectType):
 
 
 class ${1/.+/$0/g:model}Query(graphene.AbstractType):
-    ${1/.+/\L$0\E/g:model} = graphene.Field($1Type, ${3:uuid}=graphene.String())
+    ${1/.+/\L$0\E/g:model} = graphene.Field($1Type, $3=graphene.String())
     all_${1/.+/\L$0\E/g:model}s = graphene.List($1Type)
 
     def resolve_${1/.+/\L$0\E/g:model}(self, input, context, info):
@@ -94,10 +101,10 @@ class ${1/.+/$0/g:model}Query(graphene.AbstractType):
         return $1Type.get_queryset()
 
 
-class Create$1(graphene.Mutation):
+class Create$1(graphene.ClientIDMutation):
     ${1/.+/\L$0\E/g:model} = graphene.Field($1Type)
-	form_messages = graphene.String()
-	status = graphene.Int()
+    form_messages = graphene.String()
+    status = graphene.Int()
 
     class Input:
         name = graphene.String()
@@ -111,34 +118,34 @@ class Create$1(graphene.Mutation):
                 ${1/.+/\L$0\E/g:model}inst = mform.save()
                 return Create$1(${1/.+/\L$0\E/g:model}=${1/.+/\L$0\E/g:model}inst, form_messages=None)
             except Exception as valerror:
-                return Create$1(${1/.+/\L$0\E/g:model}=None, form_messages=str(valerror))
-        return Create$1(${1/.+/\L$0\E/g:model}=None, form_messages=None)
+                return Create$1(${1/.+/\L$0\E/g:model}=None, form_messages='An internal error occurred.')
+        return Create$1(${1/.+/\L$0\E/g:model}=None, form_messages=mform.errors)
 
 
-class Update$1(graphene.Mutation):
+class Update$1(graphene.ClientIDMutation):
     ${1/.+/\L$0\E/g:model} = graphene.Field($1Type)
-	form_messages = graphene.String()
-	status = graphene.Int()
+    form_messages = graphene.String()
+    status = graphene.Int()
 
     class Input:
         name = graphene.String()
-        id = graphene.ID()
+        $3 = graphene.String()
 
     @classmethod
     def mutate_and_get_payload(root, input, context, info):
-        inst = $1.objects.get(pk=input.get('id'))
+        inst = $1.objects.get($3 =input.pop('$3 '))
         # Remember to import correct Form
-        mform = $1Form({'name': input['name']}, instance=inst)
+        mform = $1Form(input, instance=inst)
         if mform.is_valid():
             try:
                 ${1/.+/\L$0\E/g:model}inst = mform.save()
-                return Create$1(${1/.+/\L$0\E/g:model}=${1/.+/\L$0\E/g:model}inst, form_messages=None)
+                return Update$1(${1/.+/\L$0\E/g:model}=${1/.+/\L$0\E/g:model}inst, form_messages=None)
             except Exception as valerror:
-                return Create$1(${1/.+/\L$0\E/g:model}=None, form_messages=str(valerror))
-        return Create$1(${1/.+/\L$0\E/g:model}=None, form_messages=None)
+                return Update$1(${1/.+/\L$0\E/g:model}=None, form_messages='An internal error occurred.')
+        return Update$1(${1/.+/\L$0\E/g:model}=None, form_messages=mform.errors)
 
 
-class Delete$1(graphene.Mutation):
+class Delete$1(graphene.ClientIDMutation):
     ${1/.+/\L$0\E/g:model} = graphene.Field($1Type)
     form_messages = graphene.String()
 
