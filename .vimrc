@@ -36,9 +36,10 @@
     Plug 'airblade/vim-gitgutter'
     "Plug 'altercation/vim-colors-solarized'
     Plug 'bitc/lushtags'
+    Plug 'carlitux/deoplete-ternjs',  { 'for': ['javascript', 'javascript.jsx'] }
     Plug 'chriskempson/base16-vim'
     Plug 'dyng/ctrlsf.vim'
-    "Plug 'editorconfig/editorconfig-vim'
+    Plug 'editorconfig/editorconfig-vim'
     "Plug 'edkolev/tmuxline.vim'
     "Plug 'edkolev/promptline.vim'
     Plug 'godlygeek/tabular'
@@ -55,11 +56,12 @@
     Plug 'scrooloose/nerdtree'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'SirVer/ultisnips'
+    Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
     Plug 'tomtom/tlib_vim'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
     Plug 'ujihisa/neco-ghc'
-    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline', { 'commit': '470e9870f13830580d1938a2dae1be5b6e43d92a' }
     Plug 'vim-airline/vim-airline-themes'
     Plug 'vim-syntastic/syntastic'
     Plug 'zchee/deoplete-jedi'
@@ -399,6 +401,69 @@
 
 " Plugins {{
 
+    " ternjs {{
+    " Set bin if you have many instalations
+    "let g:deoplete#sources#ternjs#tern_bin = '$(npm bin)/tern'
+    let g:deoplete#sources#ternjs#timeout = 1
+
+    " Whether to include the types of the completions in the result data. Default: 0
+    let g:deoplete#sources#ternjs#types = 1
+
+    " Whether to include the distance (in scopes for variables, in prototypes for 
+    " properties) between the completions and the origin position in the result 
+    " data. Default: 0
+    let g:deoplete#sources#ternjs#depths = 1
+
+    " Whether to include documentation strings (if found) in the result data.
+    " Default: 0
+    let g:deoplete#sources#ternjs#docs = 1
+
+    " When on, only completions that match the current word at the given point will
+    " be returned. Turn this off to get all results, so that you can filter on the 
+    " client side. Default: 1
+    let g:deoplete#sources#ternjs#filter = 0
+
+    " Whether to use a case-insensitive compare between the current word and 
+    " potential completions. Default 0
+    let g:deoplete#sources#ternjs#case_insensitive = 1
+
+    " When completing a property and no completions are found, Tern will use some 
+    " heuristics to try and return some properties anyway. Set this to 0 to 
+    " turn that off. Default: 1
+    let g:deoplete#sources#ternjs#guess = 0
+
+    " Determines whether the result set will be sorted. Default: 1
+    let g:deoplete#sources#ternjs#sort = 0
+
+    " When disabled, only the text before the given position is considered part of 
+    " the word. When enabled (the default), the whole variable name that the cursor
+    " is on will be included. Default: 1
+    let g:deoplete#sources#ternjs#expand_word_forward = 0
+
+    " Whether to ignore the properties of Object.prototype unless they have been 
+    " spelled out by at least to characters. Default: 1
+    let g:deoplete#sources#ternjs#omit_object_prototype = 0
+
+    " Whether to include JavaScript keywords when completing something that is not 
+    " a property. Default: 0
+    let g:deoplete#sources#ternjs#include_keywords = 1
+
+    " If completions should be returned when inside a literal. Default: 1
+    let g:deoplete#sources#ternjs#in_literal = 0
+
+
+    "Add extra filetypes
+    let g:deoplete#sources#ternjs#filetypes = [
+                    \ 'jsx',
+                    \ 'javascript.jsx',
+                    \ 'vue',
+                    \ '...'
+                    \ ]
+    " Use tern_for_vim.
+    let g:tern#command = ["tern"]
+    let g:tern#arguments = ["--persistent"]
+    "}}
+
     " backgroundcolor {{
     set background=dark         " Assume a dark background
 
@@ -438,6 +503,13 @@
         let g:deoplete#enable_at_startup = 1
         let g:deoplete#omni_patterns = {}
         let g:deoplete#omni_patterns.javascript = '[^. *\t]\.\w*'
+        let g:deoplete#omni#functions = {}
+        let g:deoplete#omni#functions.javascript = ['tern#Complete']
+        set completeopt=longest,menuone,preview
+        let g:deoplete#sources = {}
+        let g:deoplete#sources['javascript.jsx'] = ['file', 'ternjs']
+        " or just disable the preview entirely
+        set completeopt-=preview
     " }}
 
     " EasyMotion {{
@@ -479,8 +551,8 @@
 
 " emmet {{
     let g:user_emmet_mode='a'    " Enable all function in all mode.
-    let g:user_emmet_install_global = 0
-    autocmd FileType html,css EmmetInstall " Enable just for html/css
+    "let g:user_emmet_install_global = 0
+    autocmd FileType html,css,js EmmetInstall " Enable just for html/css
 " }}
 
     " Tabularize {{
@@ -567,6 +639,10 @@
     let g:syntastic_aggregate_errors = 1
 
     let g:syntastic_python_checkers = ['flake8', 'pyflakes', 'pylint', 'python']
+    let g:syntastic_javascript_checkers=['eslint']
+    let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+    let g:syntastic_javascript_eslint_exec = '/bin/ls'
+    let g:syntastic_javascript_eslint_args=['--cache']
 
     nmap <leader>sp :call <SID>SynStack()<CR>
     function! <SID>SynStack()
