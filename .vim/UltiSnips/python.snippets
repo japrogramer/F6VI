@@ -1,6 +1,12 @@
 priority -50
 # imports
 ################################################################
+snippet ilog "Logging boilerplate" b
+# import the logging library
+import logging
+logger = logging.getLogger(__name__)
+endsnippet
+
 snippet itrans "The translation module" b
 from django.utils.translation import ugettext_lazy as _
 endsnippet
@@ -26,29 +32,17 @@ from apple.graphquery.utils import process_res
 endsnippet
 
 snippet ipdb "quick hard brake point" b
-import pdb
-pdb.set_trace()
+import pdb; pdb.set_trace()
 endsnippet
 
 # Test Snippets
 ################################################################
 snippet tschema "Test a graphene schema" b
-from ..schema import ${1:Model}Query, $1Mutation, $1Loader
-
-import graphene
-
-
-class ${2:Dummy}$1Query($1Query, graphene.ObjectType):
-	"""$1 Query for testing"""
-	pass
+from graphquery.tests.utils import ts_gen
+from ..schema import ${1:Model}Query, $1Mutation, $1Subscription, $1Loader
 
 
-class $2$1Mutation($1Mutation, graphene.ObjectType):
-	"""$1 Mutation for testing"""
-	pass
-
-
-test_schema = graphene.Schema(query=$2$1Mutation)
+test_schema = ts_gen($1Query, Mutation=$1Mutation, Subscription=$1Subscritption)
 
 
 class DataLoaders:
@@ -60,21 +54,23 @@ endsnippet
 snippet tgq "Test a basic query on a schema" b
 def test_${1:base}(self):
 	query = '''
-		query {
-			${1/.+/$0/g:base} (uuid: "%s") {
+		query Test ($uuid: String) {
+			${1/.+/$0/g:base} (uuid: $uuid) {
 			${2:name}
 			uuid
 			}
 		}
-		''' % self.user1.uuid
+		'''
+	foovar = {
+		'uuid': self.${1/.+/$0/g:base}1.uuid
+		}
 
 	expected = {'${1/.+/$0/g:base}': {
 			'$2': '%s' % self.${1/.+/$0/g:base}1.$2 ,
 			'uuid': '%s' % self.${1/.+/$0/g:base}1.uuid
 			}}
-	result = test_schema.execute(query)
-	/*- TODO: switch to variable_values for easier query creation <09-08-17,djapo> -*/
-	# result = test_schema.execute(query, variable_values=?)
+
+	result = test_schema.execute(query, variable_values=foovar,  **self.kwargs)
 
 	assert not result.errors
 	assert result.data == expected
