@@ -101,12 +101,11 @@ class $1Type(TypeMixin, DjangoObjectType):
 
 
 class ${1/.+/$0/g:model}Query(object):
-	${1/.+/\L$0\E/g:model} = graphene.Field($1Type, $3=graphene.String())
-	all_${1/.+/\L$0\E/g:model}s = graphene.List($1Type)
+	${1/.+/\L$0\E/g:model} = graphene.Field($1Type, $3=graphene.String(), description='retrieve a single $1')
+	all_${1/.+/\L$0\E/g:model}s = graphene.List($1Type, description='retrieve all relevant $1')
 
 	def resolve_${1/.+/\L$0\E/g:model}(self, info, **args):
 		return info.context.dataloaders.${1/.+/\L$0\E/g:model}.load(args['$3'])
-
 
 	def resolve_all_${1/.+/\L$0\E/g:model}s(self, info, **args):
 		return $1Type.get_queryset()
@@ -130,7 +129,7 @@ class Create$1(graphene.Mutation):
 	@staticmethod
 	def mutate(root, info, **input):
 		# Remember to import correct Form
-		mform = $1Form(name=input.get('name'))
+		mform = $1Form(input['${1/.+/\L$0\E/g:model}_data'])
 		if mform.is_valid():
 			try:
 				${1/.+/\L$0\E/g:model}inst = mform.save()
@@ -138,7 +137,7 @@ class Create$1(graphene.Mutation):
 					${1/.+/\L$0\E/g:model}=${1/.+/\L$0\E/g:model}inst,
 					form_messages=None,
 					status=200)
-			except Exception as valerror:
+			except Exception as e:
 				return Create$1(
 					${1/.+/\L$0\E/g:model}=None,
 					form_messages='An internal error occurred.',
@@ -170,7 +169,7 @@ class Update$1(graphene.Mutation):
 					${1/.+/\L$0\E/g:model}=${1/.+/\L$0\E/g:model}inst,
 					form_messages=None,
 					status=200)
-			except Exception as valerror:
+			except Exception as e:
 				return Update$1(
 					${1/.+/\L$0\E/g:model}=None,
 					form_messages='An internal error occurred.',
@@ -198,7 +197,7 @@ class Delete$1(graphene.Mutation):
 				${1/.+/\L$0\E/g:model}=${1/.+/\L$0\E/g:model}_inst,
 				form_messages=None,
 				status=200)
-		except Exception as valerror:
+		except Exception as e:
 			return Update$1(
 				${1/.+/\L$0\E/g:model}=${1/.+/\L$0\E/g:model}_inst,
 				form_messages='An internal error occurred.',
