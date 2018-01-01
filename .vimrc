@@ -35,6 +35,7 @@
 
     Plug 'airblade/vim-gitgutter'
     "Plug 'altercation/vim-colors-solarized'
+    Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-0.1.13-x86_64-unknown-linux-musl'}
     Plug 'bitc/lushtags'
     Plug 'carlitux/deoplete-ternjs',  { 'for': ['javascript', 'javascript.jsx'] }
     Plug 'chriskempson/base16-vim'
@@ -52,6 +53,8 @@
     Plug 'mattn/emmet-vim'
     Plug 'mileszs/ack.vim'
     Plug 'Raimondi/delimitMate'
+    Plug 'racer-rust/vim-racer'
+    Plug 'rust-lang/rust.vim'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -61,7 +64,7 @@
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
     Plug 'ujihisa/neco-ghc'
-    Plug 'vim-airline/vim-airline', { 'commit': '470e9870f13830580d1938a2dae1be5b6e43d92a' }
+    Plug 'vim-airline/vim-airline' " , { 'commit': '470e9870f13830580d1938a2dae1be5b6e43d92a' }
     Plug 'vim-airline/vim-airline-themes'
     Plug 'vim-syntastic/syntastic'
     Plug 'zchee/deoplete-jedi'
@@ -94,7 +97,7 @@
     endif
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
-    set mouse=r                 " Automatically enable mouse usage
+    set mouse=c                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
     scriptencoding utf-8
     set encoding=utf-8
@@ -615,6 +618,35 @@
     let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
     " }}
 
+    " rust.vim {{
+        au FileType rust nmap gd <Plug>(rust-def)
+        au FileType rust nmap gs <Plug>(rust-def-split)
+        au FileType rust nmap gx <Plug>(rust-def-vertical)
+        au FileType rust nmap <leader>gd <Plug>(rust-doc)
+        let g:rustfmt_autosave = 1
+    "}}
+
+    " << LSP >> {{
+        " a basic set up for LanguageClient-Neovim
+        " if you want it to turn on automatically
+        " let g:LanguageClient_autoStart = 1
+        let g:LanguageClient_autoStart = 0
+        nnoremap <leader>lcs :LanguageClientStart<CR>
+
+        let g:LanguageClient_serverCommands = {
+                    \ 'python': ['pyls'],
+                    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+                    \ 'javascript': ['javascript-typescript-stdio'],
+                    \ 'go': ['go-langserver'] }
+
+        noremap <silent> <leader>H :call LanguageClient_textDocument_hover()<CR>
+        noremap <silent> <leader>I :call LanguageClient_rustDocument_implementations()<CR>
+        noremap <silent> <leader>Z :call LanguageClient_textDocument_definition()<CR>
+        noremap <silent> <leader>R :call LanguageClient_textDocument_rename()<CR>
+        noremap <silent> <leader>F :call LanguageClient_textDocument_formatting()<CR>
+        noremap <silent> <leader>A :call LanguageClient_textDocument_codeAction()<CR>
+    "}}
+
     " surround {{
         let b:surround_{char2nr("v")} = "{{ \r }}"
         let b:surround_{char2nr("{")} = "{{ \r }}"
@@ -639,6 +671,7 @@
     let g:syntastic_aggregate_errors = 1
 
     let g:syntastic_python_checkers = ['flake8', 'pyflakes', 'pylint', 'python']
+    let g:syntastic_python_flake8_args='--ignore=E501'
     let g:syntastic_javascript_checkers=['eslint']
     let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
     let g:syntastic_javascript_eslint_exec = '/bin/ls'

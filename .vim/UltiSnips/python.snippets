@@ -83,7 +83,7 @@ endsnippet
 # Graphene
 ################################################################
 snippet gboiler "graphene boilerplate" b
-${1/.+/$0/g:Model} = apps.get_model('${1/.+/\L$0\E/g:model}', '$1')
+${1:Model} = apps.get_model('${1/.+/\L$0\E/g:model}', '$1')
 
 
 class $1Type(TypeMixin, DjangoObjectType):
@@ -216,17 +216,36 @@ class $1Subscritption(object):
 	sub_${1/.+/\L$0\E/g:model} = graphene.Field(
 		$1Type,
 		description='subscribe to updated ${1/.+/\L$0\E/g:model}',
-		$3=graphene.String())
+		$3=graphene.ID())
 
 	def resolve_sub_${1/.+/\L$0\E/g:model}(self, info, **args):
-		$3 = args.get('$3')
-		qs = $1Type.get_queryset()
+		inst = relay.Node.get_node_from_global_id(info, input.get('$3'))
 		try:
-			gp_name = 'gqp.${1/.+/\L$0\E/g:model}-updated.{0}'.format($3)
+			gp_name = 'gqp.{0}-updated.{1}'.format(str.lower(inst.__class__.__name__), inst.pk)
 			Group(gp_name).add(info.context.reply_channel)
 			info.context.channel_session['Groups'] = ','.join(
 				(gp_name, info.context.channel_session['Groups']))
 		except:
 			pass
-		return qs.get($3=$3)
+		return inst
+endsnippet
+
+snippet PQConnection "description"
+class ${4:${1:Model}${2:Model}Type}(DjangoObjectType):
+	class Meta:
+		model = $2
+		only_fields = ($3)
+
+
+class $1PQConnection(relay.Connection):
+	page_info = graphene.Field(PaginatorInfo, required=True)
+
+	class Meta:
+		node = ${5:M2MType}
+
+	class Edge:
+		through = graphene.Field($4, description='Connection reason')
+
+		def resolve_through(self, info, **args):
+			return self.node.$6[0]
 endsnippet
