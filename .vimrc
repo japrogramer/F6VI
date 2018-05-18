@@ -27,7 +27,7 @@
     " Setup Bundle Support {{
     " auto-install vim-plug
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-      silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim--create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
       autocmd VimEnter * PlugInstall
     endif
     " Specify a directory for plugins
@@ -35,7 +35,7 @@
 
     Plug 'airblade/vim-gitgutter'
     "Plug 'altercation/vim-colors-solarized'
-    Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-0.1.13-x86_64-unknown-linux-musl'}
+    Plug 'autozimu/LanguageClient-neovim' ", {'tag': 'binary-0.1.13-x86_64-unknown-linux-musl'}
     Plug 'bitc/lushtags'
     Plug 'carlitux/deoplete-ternjs',  { 'for': ['javascript', 'javascript.jsx'] }
     Plug 'chriskempson/base16-vim'
