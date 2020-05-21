@@ -506,11 +506,11 @@
         let g:deoplete#enable_at_startup = 1
         let g:deoplete#omni_patterns = {}
         let g:deoplete#omni_patterns.javascript = '[^. *\t]\.\w*'
-        let g:deoplete#omni#functions = {}
-        let g:deoplete#omni#functions.javascript = ['tern#Complete']
+        let g:deoplete#custom#var = {}
+        let g:deoplete#custom#var.javascript = ['tern#Complete']
         set completeopt=longest,menuone,preview
-        let g:deoplete#sources = {}
-        let g:deoplete#sources['javascript.jsx'] = ['file', 'ternjs']
+        let g:deoplete#custom#option = {}
+        let g:deoplete#custom#option['javascript.jsx'] = ['file', 'ternjs']
         " or just disable the preview entirely
         set completeopt-=preview
     " }}
